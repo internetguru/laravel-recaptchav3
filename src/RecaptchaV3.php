@@ -119,8 +119,12 @@ class RecaptchaV3
         $fieldId = uniqid($name . '-', false);
         $html = '<input type="hidden" name="' . $name . '" id="' . $fieldId . '">';
         $html .= "<script>
-    let form = document.getElementById('" . $fieldId . "').form;
+    let field = document.getElementById('" . $fieldId . "')
+    let form = field.form
     form.addEventListener('submit', async (e) => {
+        if (field.value != '') {
+          return
+        }
         e.preventDefault(); // Prevent the default form submission
         //grecaptcha.ready(function() {
             const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
