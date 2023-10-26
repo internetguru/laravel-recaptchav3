@@ -1,5 +1,5 @@
 {
-    "name": "josiasmontag/laravel-recaptchav3",
+    "name": "internetguru/laravel-recaptchav3",
     "description": "Recaptcha V3 for Laravel package",
     "keywords": [
         "captcha",
@@ -7,7 +7,7 @@
         "laravel",
         "php"
     ],
-    "homepage": "https://github.com/josiasmontag/laravel-recaptchav3",
+    "homepage": "https://github.com/internetguru/laravel-recaptchav3",
     "license": "MIT",
     "authors": [
         {
