@@ -125,6 +125,7 @@ class RecaptchaV3
         //grecaptcha.ready(function() {
             const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
             document.getElementById('" . $fieldId . "').value = token;
+            form.dispatchEvent(new Event('submit'))
             form.submit(); // Submit the form after setting the token
         //});
     });
