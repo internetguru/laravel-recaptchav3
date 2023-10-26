@@ -119,14 +119,15 @@ class RecaptchaV3
         $fieldId = uniqid($name . '-', false);
         $html = '<input type="hidden" name="' . $name . '" id="' . $fieldId . '">';
         $html .= "<script>
-  let form = document.getElementById('" . $fieldId . "').form
-  form.addEventListener('submit', () => {
-      //grecaptcha.ready(function() {
-          grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'}).then(function(token) {
-             document.getElementById('" . $fieldId . "').value = token
-          })
-      //})
-  })
+    let form = document.getElementById('" . $fieldId . "').form;
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
+        //grecaptcha.ready(function() {
+            const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
+            document.getElementById('" . $fieldId . "').value = token;
+            form.submit(); // Submit the form after setting the token
+        //});
+    });
   </script>";
         return $html;
     }
