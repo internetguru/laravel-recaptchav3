@@ -121,11 +121,11 @@ class RecaptchaV3
         $html .= "<script>
   let form = document.getElementById('" . $fieldId . "').form
   form.addEventListener('submit', () => {
-      grecaptcha.ready(function() {
+      //grecaptcha.ready(function() {
           grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'}).then(function(token) {
              document.getElementById('" . $fieldId . "').value = token
           })
-      })
+      //})
   })
   </script>";
         return $html;
