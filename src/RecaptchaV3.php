@@ -119,6 +119,7 @@ class RecaptchaV3
         $fieldId = uniqid($name . '-', false);
         $html = '<input type="hidden" name="' . $name . '" id="' . $fieldId . '">';
         $html .= "<script>
+    (function(){
     let field = document.getElementById('" . $fieldId . "')
     let form = field.form
     form.addEventListener('submit', async (e) => {
@@ -133,6 +134,7 @@ class RecaptchaV3
             form.submit(); // Submit the form after setting the token
         //});
     });
+    })();
   </script>";
         return $html;
     }
