@@ -107,7 +107,7 @@ class RecaptchaV3
      */
     public function initJs()
     {
-        return '<script src="' . $this->origin . '/api.js?hl=' . $this->locale . '&render=' . $this->sitekey . '"></script>';
+        return '<script defer src="' . $this->origin . '/api.js?hl=' . $this->locale . '&render=' . $this->sitekey . '"></script>';
     }
 
 
