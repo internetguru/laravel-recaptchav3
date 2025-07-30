@@ -131,8 +131,7 @@ class RecaptchaV3
         window.setTimeout(async () => {
             const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
             document.getElementById('" . $fieldId . "').value = token;
-            form.dispatchEvent(new Event('submit'))
-            form.submit(); // Submit the form after setting the token
+            form.requestSubmit();
         }, 300);
         //});
     });
