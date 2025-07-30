@@ -128,10 +128,12 @@ class RecaptchaV3
         }
         e.preventDefault(); // Prevent the default form submission
         //grecaptcha.ready(function() {
+        window.setTimeout(async () => {
             const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
             document.getElementById('" . $fieldId . "').value = token;
             form.dispatchEvent(new Event('submit'))
             form.submit(); // Submit the form after setting the token
+        }, 300);
         //});
     });
     })();
