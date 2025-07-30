@@ -68,7 +68,6 @@ class RecaptchaV3
      */
     public function verify($token, $action = null)
     {
-
         $response = $this->http->request('POST', $this->origin . '/api/siteverify', [
             'form_params' => [
                 'secret'   => $this->secret,
@@ -79,6 +78,7 @@ class RecaptchaV3
 
 
         $body = json_decode($response->getBody(), true);
+
 
         if (!isset($body['success']) || $body['success'] !== true) {
             return false;
@@ -117,7 +117,7 @@ class RecaptchaV3
     public function field($action, $name = 'g-recaptcha-response')
     {
         $fieldId = uniqid($name . '-', false);
-        $html = '<input type="hidden" name="' . $name . '" id="' . $fieldId . '">';
+        $html = '<input type="hidden" name="' . $name . '" id="' . $fieldId . '" wire:model="gRecaptchaResponse">';
         $html .= "<script>
     (function(){
     let field = document.getElementById('" . $fieldId . "')
@@ -131,7 +131,13 @@ class RecaptchaV3
         window.setTimeout(async () => {
             const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
             document.getElementById('" . $fieldId . "').value = token;
-            form.requestSubmit();
+            if (form.hasAttribute('data-livewire-id')) {
+                const wireId = form.getAttribute('data-livewire-id');
+                Livewire.find(wireId).set('gRecaptchaResponse', token);
+                form.dispatchEvent(new Event('submitready'));
+            } else {
+                form.submit();
+            }
         }, 300);
         //});
     });
