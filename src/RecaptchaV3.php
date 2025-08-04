@@ -130,7 +130,7 @@ class RecaptchaV3
         //grecaptcha.ready(function() {
         window.setTimeout(async () => {
             const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
-            document.getElementById('" . $fieldId . "').value = token;
+            form.querySelector('input[id^=" . $name . "]').value = token;
             if (form.hasAttribute('data-livewire-id')) {
                 const wireId = form.getAttribute('data-livewire-id');
                 Livewire.find(wireId).set('gRecaptchaResponse', token);
