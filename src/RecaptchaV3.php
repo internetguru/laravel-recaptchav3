@@ -22,8 +22,30 @@ class RecaptchaV3
         return $this->sitekey;
     }
 
+    public function isEnabled(): bool
+    {
+        if (app()->environment('local')) {
+            return false;
+        }
+        if (app()->environment('testing')) {
+            return false;
+        }
+        if (config('app.demo', false)) {
+            return false;
+        }
+        if (auth()->check()) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function initJs(): string
     {
+        if (! $this->isEnabled()) {
+            return '';
+        }
+
         $url = $this->origin.'/api.js?render='.$this->sitekey;
         if ($this->locale) {
             $url .= '&hl='.$this->locale;
@@ -34,11 +56,19 @@ class RecaptchaV3
 
     public function field(string $action): string
     {
+        if (! $this->isEnabled()) {
+            return '';
+        }
+
         return '<input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-'.$action.'">';
     }
 
     public function script(string $action): string
     {
+        if (! $this->isEnabled()) {
+            return '';
+        }
+
         return "
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -61,6 +91,10 @@ class RecaptchaV3
 
     public function livewire(string $action): string
     {
+        if (! $this->isEnabled()) {
+            return '';
+        }
+
         return "
             <div x-data x-init=\"
                 grecaptcha.ready(function() {
@@ -79,6 +113,10 @@ class RecaptchaV3
 
     public function verify(?string $token, ?string $ip = null): bool
     {
+        if (! $this->isEnabled()) {
+            return true;
+        }
+
         if (empty($token)) {
             return false;
         }
