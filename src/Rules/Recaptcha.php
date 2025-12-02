@@ -13,7 +13,7 @@ class Recaptcha implements ValidationRule
         $recaptcha = app(RecaptchaV3::class);
 
         if (! $recaptcha->verify($value)) {
-            $fail('The :attribute verification failed.');
+            $fail(__('recaptchav3::messages.failed'), null);
         }
     }
 }

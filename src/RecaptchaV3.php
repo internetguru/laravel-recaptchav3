@@ -12,6 +12,7 @@ class RecaptchaV3
         protected string $sitekey,
         protected string $secret,
         protected ?string $locale,
+        protected float $score,
         protected HttpFactory $http,
         protected Request $request
     ) {}
@@ -40,12 +41,19 @@ class RecaptchaV3
     {
         return "
             <script>
-                grecaptcha.ready(function() {
-                    grecaptcha.execute('".$this->sitekey."', {action: '".$action."'}).then(function(token) {
-                        if (document.getElementById('g-recaptcha-response-".$action."')) {
-                            document.getElementById('g-recaptcha-response-".$action."').value = token;
-                        }
-                    });
+                document.addEventListener('DOMContentLoaded', function() {
+                    var input = document.getElementById('g-recaptcha-response-".$action."');
+                    if (input) {
+                        grecaptcha.ready(function() {
+                            var refresh = function() {
+                                grecaptcha.execute('".$this->sitekey."', {action: '".$action."'}).then(function(token) {
+                                    input.value = token;
+                                });
+                            };
+                            refresh();
+                            setInterval(refresh, 100000);
+                        });
+                    }
                 });
             </script>
         ";
@@ -56,10 +64,14 @@ class RecaptchaV3
         return "
             <div x-data x-init=\"
                 grecaptcha.ready(function() {
-                    grecaptcha.execute('".$this->sitekey."', {action: '".$action."'})
-                        .then(function(token) {
-                            \$wire.set('recaptchaToken', token);
-                        });
+                    var refresh = function() {
+                        grecaptcha.execute('".$this->sitekey."', {action: '".$action."'})
+                            .then(function(token) {
+                                \$wire.set('recaptchaToken', token);
+                            });
+                    };
+                    refresh();
+                    setInterval(refresh, 100000);
                 });
             \"></div>
         ";
@@ -79,6 +91,14 @@ class RecaptchaV3
 
         $data = $response->json();
 
-        return $data['success'] ?? false;
+        if (! ($data['success'] ?? false)) {
+            return false;
+        }
+
+        if (isset($data['score']) && $data['score'] < $this->score) {
+            return false;
+        }
+
+        return true;
     }
 }

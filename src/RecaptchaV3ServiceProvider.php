@@ -18,6 +18,7 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
                 sitekey: config('recaptchav3.sitekey'),
                 secret: config('recaptchav3.secret'),
                 locale: config('recaptchav3.locale'),
+                score: config('recaptchav3.score'),
                 http: $app['Illuminate\Http\Client\Factory'],
                 request: $app['request']
             );
@@ -26,10 +27,16 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->loadTranslationsFrom(__DIR__.'/lang', 'recaptchav3');
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/config/recaptchav3.php' => config_path('recaptchav3.php'),
             ], 'recaptchav3-config');
+
+            $this->publishes([
+                __DIR__.'/lang' => $this->app->langPath('vendor/recaptchav3'),
+            ], 'recaptchav3-translations');
         }
 
         Blade::directive('recaptchaInit', function () {
@@ -50,6 +57,6 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
 
         Validator::extend('recaptchav3', function ($attribute, $value, $parameters, $validator) {
             return app(RecaptchaV3::class)->verify($value);
-        }, 'ReCAPTCHA verification failed.');
+        }, trans('recaptchav3::messages.failed'));
     }
 }

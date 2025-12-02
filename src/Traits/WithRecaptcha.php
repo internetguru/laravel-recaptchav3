@@ -9,13 +9,13 @@ trait WithRecaptcha
 {
     public $recaptchaToken;
 
-    public function verifyRecaptcha(?string $action = null): void
+    public function verifyRecaptcha(): void
     {
         $recaptcha = app(RecaptchaV3::class);
 
         if (! $recaptcha->verify($this->recaptchaToken)) {
             throw ValidationException::withMessages([
-                'recaptchaToken' => ['ReCAPTCHA verification failed.'],
+                'recaptchaToken' => [__('recaptchav3::messages.failed')],
             ]);
         }
     }
