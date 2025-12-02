@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Old recaptcha implementation based on third-party package.
 
+
+## [0.1.0-rc.1] - 2025-07-30
+
 ## [0.0.3] - 2025-12-02
 
 ## [0.0.2] - 2025-11-14
