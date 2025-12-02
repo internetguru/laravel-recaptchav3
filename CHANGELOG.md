@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
 ## [0.1.0-rc.3] - 2025-12-02
 
 ### Changed
@@ -43,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - New changelog file.
 
+[Unreleased]: https://https://github.com/internetguru/laravel-recaptchav3/compare/staging...dev
 [0.1.0-rc.3]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v0.0.3
 [0.1.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v0.0.0
 [0.0.3]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v0.0.3
