@@ -5,6 +5,7 @@ namespace InternetGuru\LaravelRecaptchaV3;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use InternetGuru\LaravelRecaptchaV3\Middleware\InjectRecaptchaScript;
 
 class RecaptchaV3ServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,8 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
                 __DIR__.'/lang' => $this->app->langPath('vendor/recaptchav3'),
             ], 'recaptchav3-translations');
         }
+
+        $this->app['router']->pushMiddlewareToGroup('web', InjectRecaptchaScript::class);
 
         Blade::directive('recaptchaInit', function () {
             return "<?php echo app(\InternetGuru\LaravelRecaptchaV3\RecaptchaV3::class)->initJs(); ?>";
