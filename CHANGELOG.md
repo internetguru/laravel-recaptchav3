@@ -6,13 +6,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
 
+- Reimplement package for both Livewire and classic Controller usage.
+
+### Removed
+
+- Remove Lunaweb RecaptchaV3 package dependency.
 
 ## [0.1.0-rc.1] - 2025-07-30
 
+### Added
+
+- Old recaptcha implementation based on third-party package.
+
 ## [0.0.2] - 2025-11-14
 
+### Changed
+
+- Minor unknown updates.
+
 ## [0.0.1] - 2025-08-04
+
+### Changed
+
+- Minor unknown updates.
 
 ## [0.0.0] - 2025-02-28
 
