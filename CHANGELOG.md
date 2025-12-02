@@ -12,6 +12,10 @@ _Stable release based on [1.0.0-rc.1]._
 
 ## [1.0.0-rc.1] - 2025-12-02
 
+### Changed
+
+- Udate major version to `1`.
+
 ## [0.1.0] - 2025-12-02
 
 _Stable release based on [3.0.0-rc.1]._
