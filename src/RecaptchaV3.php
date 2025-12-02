@@ -1,150 +1,142 @@
 <?php
-/**
- * Created by Josias Montag
- * Date: 10/30/18 11:04 AM
- * Mail: josias@montag.info
- */
 
-namespace Lunaweb\RecaptchaV3;
+namespace InternetGuru\LaravelRecaptchaV3;
 
-
-use GuzzleHttp\Client;
+use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Foundation\Application;
 
 class RecaptchaV3
 {
+    public function __construct(
+        protected string $origin,
+        protected string $sitekey,
+        protected string $secret,
+        protected ?string $locale,
+        protected float $score,
+        protected HttpFactory $http,
+        protected Request $request
+    ) {}
 
-    /**
-     * @var string
-     */
-    protected $secret;
-    /**
-     * @var string
-     */
-    protected $sitekey;
-    /**
-     * @var string
-     */
-    protected $origin;
-    /**
-     * @var string
-     */
-    protected $locale;
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    protected $http;
-
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
-
-    /**
-     * RecaptchaV3 constructor.
-     *
-     * @param $secret
-     * @param $sitekey
-     */
-    public function __construct(Repository $config, Client $client, Request $request, Application $app)
-    {
-        $this->secret = $config['recaptchav3']['secret'];
-        $this->sitekey = $config['recaptchav3']['sitekey'];
-        $this->origin = $config['recaptchav3']['origin'] ?? 'https://www.google.com/recaptcha';
-        $this->locale = $config['recaptchav3']['locale'] ?? $app->getLocale();
-        $this->http = $client;
-        $this->request = $request;
-    }
-
-
-    /*
-     * Verify the given token and retutn the score.
-     * Returns false if token is invalid.
-     * Returns the score if the token is valid.
-     *
-     * @param $token
-     */
-    public function verify($token, $action = null)
-    {
-        $response = $this->http->request('POST', $this->origin . '/api/siteverify', [
-            'form_params' => [
-                'secret'   => $this->secret,
-                'response' => $token,
-                'remoteip' => $this->request->getClientIp(),
-            ],
-        ]);
-
-
-        $body = json_decode($response->getBody(), true);
-
-
-        if (!isset($body['success']) || $body['success'] !== true) {
-            return false;
-        }
-
-        if ($action && (!isset($body['action']) || $action != $body['action'])) {
-            return false;
-        }
-
-
-        return isset($body['score']) ? $body['score'] : false;
-
-    }
-
-
-    /**
-     * @return string
-     */
-    public function sitekey()
+    public function sitekey(): string
     {
         return $this->sitekey;
     }
 
-    /**
-     * @return string
-     */
-    public function initJs()
+    public function isEnabled(): bool
     {
-        return '<script defer src="' . $this->origin . '/api.js?hl=' . $this->locale . '&render=' . $this->sitekey . '"></script>';
-    }
-
-
-    /**
-     * @param $action
-     */
-    public function field($action, $name = 'g-recaptcha-response')
-    {
-        $fieldId = uniqid($name . '-', false);
-        $html = '<input type="hidden" name="' . $name . '" id="' . $fieldId . '" wire:model="gRecaptchaResponse">';
-        $html .= "<script>
-    (function(){
-    let field = document.getElementById('" . $fieldId . "')
-    let form = field.form
-    form.addEventListener('submit', async (e) => {
-        if (field.value != '') {
-          return
+        if (app()->environment('local')) {
+            return false;
         }
-        e.preventDefault(); // Prevent the default form submission
-        //grecaptcha.ready(function() {
-        window.setTimeout(async () => {
-            const token = await grecaptcha.execute('" . $this->sitekey . "', {action: '" . $action . "'});
-            form.querySelector('input[id^=" . $name . "]').value = token;
-            if (form.hasAttribute('data-livewire-id')) {
-                const wireId = form.getAttribute('data-livewire-id');
-                Livewire.find(wireId).set('gRecaptchaResponse', token);
-                form.dispatchEvent(new Event('submitready'));
-            } else {
-                form.submit();
-            }
-        }, 300);
-        //});
-    });
-    })();
-  </script>";
-        return $html;
+        if (app()->environment('testing')) {
+            return false;
+        }
+        if (config('app.demo', false)) {
+            return false;
+        }
+        if (auth()->check()) {
+            return false;
+        }
+
+        return true;
     }
 
+    public function initJs(): string
+    {
+        if (! $this->isEnabled()) {
+            return '';
+        }
 
+        $url = $this->origin.'/api.js?render='.$this->sitekey;
+        if ($this->locale) {
+            $url .= '&hl='.$this->locale;
+        }
+
+        return '<script src="'.$url.'"></script>';
+    }
+
+    public function field(string $action): string
+    {
+        if (! $this->isEnabled()) {
+            return '';
+        }
+
+        return '<input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-'.$action.'">';
+    }
+
+    public function script(string $action): string
+    {
+        if (! $this->isEnabled()) {
+            return '';
+        }
+
+        return "
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var input = document.getElementById('g-recaptcha-response-".$action."');
+                    if (input) {
+                        grecaptcha.ready(function() {
+                            var refresh = function() {
+                                grecaptcha.execute('".$this->sitekey."', {action: '".$action."'}).then(function(token) {
+                                    input.value = token;
+                                });
+                            };
+                            refresh();
+                            setInterval(refresh, 100000);
+                        });
+                    }
+                });
+            </script>
+        ";
+    }
+
+    public function livewire(string $action): string
+    {
+        if (! $this->isEnabled()) {
+            return '';
+        }
+
+        return "
+            <div x-data x-init=\"
+                grecaptcha.ready(function() {
+                    var refresh = function() {
+                        grecaptcha.execute('".$this->sitekey."', {action: '".$action."'})
+                            .then(function(token) {
+                                \$wire.set('recaptchaToken', token);
+                            });
+                    };
+                    refresh();
+                    setInterval(refresh, 100000);
+                });
+            \"></div>
+        ";
+    }
+
+    public function verify(?string $token, ?string $ip = null): bool
+    {
+        if (! $this->isEnabled()) {
+            return true;
+        }
+
+        if (empty($token)) {
+            return false;
+        }
+
+        $response = $this->http->asForm()->post($this->origin.'/api/siteverify', [
+            'secret' => $this->secret,
+            'response' => $token,
+            'remoteip' => $ip ?? $this->request->ip(),
+        ]);
+
+        $data = $response->json();
+
+        if (! ($data['success'] ?? false)) {
+            return false;
+        }
+
+        if (isset($data['score']) && $data['score'] < $this->score) {
+            return false;
+        }
+
+        return true;
+    }
 }
