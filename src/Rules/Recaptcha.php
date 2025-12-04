@@ -12,6 +12,10 @@ class Recaptcha implements ValidationRule
     {
         $recaptcha = app(RecaptchaV3::class);
 
+        if (! $recaptcha->isEnabled()) {
+            return;
+        }
+
         if (! $recaptcha->verify($value)) {
             $fail(__('recaptchav3::messages.failed'), null);
         }
