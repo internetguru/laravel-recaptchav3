@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-12-04
+
+### Fixed
+
+- Do not validate if recaptcha is disabled.
+
 ## [1.0.0] - 2025-12-02
 
 _Stable release based on [1.0.0-rc.1]._
@@ -66,6 +72,7 @@ _Stable release based on [3.0.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-recaptchav3/compare/staging...dev
+[1.0.1]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.0.0...v1.0.1
 [1.0.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v0.1.0...v1.0.0
 [1.0.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v0.1.0
 [0.1.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v0.0.4...v0.1.0
