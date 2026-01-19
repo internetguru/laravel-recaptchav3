@@ -24,6 +24,13 @@ class RecaptchaV3
 
     public function isEnabled(): bool
     {
+        if (app()->runningInConsole()) {
+            return false;
+        }
+        // Skip for private and reserved IP addresses ~ e.g. server
+        if (! filter_var(request()->ip(), FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return false;
+        }
         if (app()->environment('local')) {
             return false;
         }
