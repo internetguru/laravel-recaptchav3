@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-01-19
+
+### Fixed
+
+- Verify request signature instead of allowing private ips in isEnabled.
+
 ## [1.1.0] - 2026-01-19
 
 _Stable release based on [1.1.0-rc.1]._
@@ -82,6 +88,7 @@ _Stable release based on [3.0.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-recaptchav3/compare/staging...dev
+[1.1.1]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.0...v1.1.1
 [1.1.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.0.1...v1.1.0
 [1.1.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.0.1
 [1.0.1]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.0.0...v1.0.1
