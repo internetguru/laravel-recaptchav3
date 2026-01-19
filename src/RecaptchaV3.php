@@ -4,6 +4,7 @@ namespace InternetGuru\LaravelRecaptchaV3;
 
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Request;
+use InternetGuru\LaravelCommon\Support\Helpers;
 
 class RecaptchaV3
 {
@@ -27,8 +28,7 @@ class RecaptchaV3
         if (app()->runningInConsole()) {
             return false;
         }
-        // Skip for private and reserved IP addresses ~ e.g. server
-        if (! filter_var(request()->ip(), FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if (Helpers::verifyRequestSignature(request())) {
             return false;
         }
         if (app()->environment('local')) {
