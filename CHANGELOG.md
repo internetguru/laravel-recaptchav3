@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Skip recaptcha for private ip addresses ~ e.g. server ips.
+
 ## [1.0.1] - 2025-12-04
 
 ### Fixed
