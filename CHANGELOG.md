@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2026-01-19
+
+_Stable release based on [1.1.0-rc.1]._
+
+## [1.1.0-rc.1] - 2026-01-19
+
+### Changed
+
+- Skip recaptcha for private ip addresses ~ e.g. server ips.
+
 ## [1.0.1] - 2025-12-04
 
 ### Fixed
@@ -15,6 +25,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 _Stable release based on [1.0.0-rc.1]._
 
 ## [1.0.0-rc.1] - 2025-12-02
+
+### Changed
+
+- Udate major version to `1`.
 
 ## [0.1.0] - 2025-12-02
 
@@ -65,6 +79,8 @@ _Stable release based on [3.0.0-rc.1]._
 
 - New changelog file.
 
+[1.1.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.0.1...v1.1.0
+[1.1.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.0.1
 [1.0.1]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.0.0...v1.0.1
 [1.0.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v0.1.0...v1.0.0
 [1.0.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v0.1.0
