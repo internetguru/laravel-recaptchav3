@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.6] - 2026-01-25
+
+### Fixed
+
+- Fix github workflow is sometimes canceled.
+
 ## [1.1.5] - 2026-01-25
 
 ### Fixed
@@ -112,6 +118,7 @@ _Stable release based on [3.0.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-recaptchav3/compare/staging...dev
+[1.1.6]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.5...v1.1.6
 [1.1.5]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.4...v1.1.5
 [1.1.4]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.3...v1.1.4
 [1.1.3]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.2...v1.1.3
