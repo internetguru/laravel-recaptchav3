@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.8] - 2026-01-25
+
+### Fixed
+
+- Fix pushing workflow badge.
+
 ## [1.1.7] - 2026-01-25
 
 ### Fixed
@@ -121,6 +127,7 @@ _Stable release based on [3.0.0-rc.1]._
 
 - New changelog file.
 
+[1.1.8]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.7...v1.1.8
 [1.1.7]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.6...v1.1.7
 [1.1.6]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.5...v1.1.6
 [1.1.5]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.4...v1.1.5
