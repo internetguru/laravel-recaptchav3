@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.9] - 2026-03-31
+
+### Fixed
+
+- Fix error messages not translated for `recaptchav3` validation rule.
+
 ## [1.1.8] - 2026-01-25
 
 ### Fixed
@@ -130,6 +136,7 @@ _Stable release based on [3.0.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-recaptchav3/compare/staging...dev
+[1.1.9]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.8...v1.1.9
 [1.1.8]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.7...v1.1.8
 [1.1.7]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.6...v1.1.7
 [1.1.6]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.5...v1.1.6

@@ -60,6 +60,10 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
 
         Validator::extend('recaptchav3', function ($attribute, $value, $parameters, $validator) {
             return app(RecaptchaV3::class)->verify($value);
-        }, trans('recaptchav3::messages.failed'));
+        });
+
+        Validator::replacer('recaptchav3', function ($message, $attribute, $rule, $parameters) {
+            return trans('recaptchav3::messages.failed');
+        });
     }
 }
