@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-08-18
+
+_Stable release based on [1.2.0-rc.1]._
+
 ## [1.2.0-rc.1] - 2026-08-18
 
 ### Fixed
@@ -148,6 +152,7 @@ _Stable release based on [3.0.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-recaptchav3/compare/staging...dev
+[1.2.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.10...v1.2.0
 [1.2.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.1.10
 [1.1.10]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.9...v1.1.10
 [1.1.9]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.8...v1.1.9
