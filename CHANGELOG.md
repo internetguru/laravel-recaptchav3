@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fetch the Livewire reCAPTCHA token on the first interaction with the form, so a form revealed client-side is not submitted without a token.
+
 ## [1.1.10] - 2026-06-02
 
 ### Fixed

@@ -96,6 +96,14 @@ class RecaptchaV3
         ";
     }
 
+    /**
+     * Alpine snippet keeping the `recaptchaToken` property of a Livewire component fresh.
+     *
+     * The token is fetched on the first interaction with the surrounding form instead of on
+     * render, so a form that is never used (e.g. one inside a closed modal) does not spend a
+     * token on every page load, and a form revealed client-side still has its token in place
+     * before it is submitted.
+     */
     public function livewire(string $action): string
     {
         if (! $this->isEnabled()) {
@@ -104,16 +112,26 @@ class RecaptchaV3
 
         return "
             <div x-data x-init=\"
-                grecaptcha.ready(function() {
-                    var refresh = function() {
-                        grecaptcha.execute('".$this->sitekey."', {action: '".$action."'})
-                            .then(function(token) {
-                                \$wire.set('recaptchaToken', token);
-                            });
-                    };
-                    refresh();
-                    setInterval(refresh, 100000);
-                });
+                var host = \$el.closest('form') || \$el.parentElement || \$el;
+                var started = false;
+                var start = function () {
+                    if (started) {
+                        return;
+                    }
+                    started = true;
+                    grecaptcha.ready(function () {
+                        var refresh = function () {
+                            grecaptcha.execute('".$this->sitekey."', {action: '".$action."'})
+                                .then(function (token) {
+                                    \$wire.set('recaptchaToken', token);
+                                });
+                        };
+                        refresh();
+                        setInterval(refresh, 100000);
+                    });
+                };
+                host.addEventListener('focusin', start);
+                host.addEventListener('pointerdown', start);
             \"></div>
         ";
     }
