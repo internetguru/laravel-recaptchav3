@@ -112,15 +112,15 @@ class RecaptchaV3
 
         return "
             <div x-data x-init=\"
-                var host = \$el.closest('form') || \$el.parentElement || \$el;
-                var started = false;
-                var start = function () {
+                let host = \$el.closest('form') || \$el.parentElement || \$el;
+                let started = false;
+                const start = function () {
                     if (started) {
                         return;
                     }
                     started = true;
                     grecaptcha.ready(function () {
-                        var refresh = function () {
+                        const refresh = function () {
                             grecaptcha.execute('".$this->sitekey."', {action: '".$action."'})
                                 .then(function (token) {
                                     \$wire.set('recaptchaToken', token);

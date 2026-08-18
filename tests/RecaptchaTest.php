@@ -54,12 +54,22 @@ class RecaptchaTest extends TestCase
 
         // The token must not be requested before the form is used, otherwise a hidden form
         // (e.g. inside a closed modal) spends a token on every page load.
-        $this->assertStringContainsString('var started = false;', $html);
+        $this->assertStringContainsString('let started = false;', $html);
         $this->assertGreaterThan(
             strpos($html, 'started = true;'),
             strpos($html, 'grecaptcha.ready('),
             'reCAPTCHA must only be executed after the first interaction started the refresh loop.'
         );
+    }
+
+    public function test_livewire_snippet_starts_with_a_declaration_alpine_can_evaluate()
+    {
+        $html = $this->enabledRecaptcha()->livewire('feedback_send');
+
+        // Alpine only wraps an x-init expression in an async IIFE when it starts with
+        // `if (`, `let` or `const`; anything else is evaluated as a single expression.
+        preg_match('/x-init="(.*?)"><\/div>/s', $html, $matches);
+        $this->assertMatchesRegularExpression('/^(let|const)\s/', trim($matches[1] ?? ''));
     }
 
     public function test_livewire_snippet_is_empty_when_disabled()
