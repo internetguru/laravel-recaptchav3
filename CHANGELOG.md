@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fetch the Livewire reCAPTCHA token on the first interaction with the form, so a form revealed client-side is not submitted without a token.
+
 ## [1.1.10] - 2026-06-02
 
 ### Fixed
@@ -139,6 +145,7 @@ _Stable release based on [3.0.0-rc.1]._
 
 - New changelog file.
 
+[Unreleased]: https://https://github.com/internetguru/laravel-recaptchav3/compare/staging...dev
 [1.1.10]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.9...v1.1.10
 [1.1.9]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.8...v1.1.9
 [1.1.8]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.1.7...v1.1.8
