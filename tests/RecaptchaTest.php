@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Illuminate\Http\Client\Factory as HttpFactory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use InternetGuru\LaravelRecaptchaV3\RecaptchaV3;
 
@@ -34,5 +36,45 @@ class RecaptchaTest extends TestCase
 
         $validator = $this->app['validator']->make(['g-recaptcha-response' => 'token'], ['g-recaptcha-response' => 'recaptchav3']);
         $this->assertTrue($validator->passes());
+    }
+
+    public function test_livewire_snippet_fetches_the_token_on_the_first_form_interaction()
+    {
+        $html = $this->enabledRecaptcha()->livewire('feedback_send');
+
+        $this->assertStringContainsString("addEventListener('focusin', start)", $html);
+        $this->assertStringContainsString("addEventListener('pointerdown', start)", $html);
+        $this->assertStringContainsString("grecaptcha.execute('sitekey', {action: 'feedback_send'})", $html);
+        $this->assertStringContainsString("\$wire.set('recaptchaToken', token)", $html);
+    }
+
+    public function test_livewire_snippet_does_not_execute_recaptcha_on_render()
+    {
+        $html = $this->enabledRecaptcha()->livewire('feedback_send');
+
+        // The token must not be requested before the form is used, otherwise a hidden form
+        // (e.g. inside a closed modal) spends a token on every page load.
+        $this->assertStringContainsString('var started = false;', $html);
+        $this->assertGreaterThan(
+            strpos($html, 'started = true;'),
+            strpos($html, 'grecaptcha.ready('),
+            'reCAPTCHA must only be executed after the first interaction started the refresh loop.'
+        );
+    }
+
+    public function test_livewire_snippet_is_empty_when_disabled()
+    {
+        $this->assertSame('', app(RecaptchaV3::class)->livewire('feedback_send'));
+    }
+
+    private function enabledRecaptcha(): RecaptchaV3
+    {
+        return new class('https://www.google.com/recaptcha', 'sitekey', 'secret', null, 0.7, app(HttpFactory::class), app(Request::class)) extends RecaptchaV3
+        {
+            public function isEnabled(): bool
+            {
+                return true;
+            }
+        };
     }
 }
