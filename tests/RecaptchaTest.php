@@ -6,6 +6,7 @@ use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use InternetGuru\LaravelRecaptchaV3\RecaptchaV3;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
 
 class RecaptchaTest extends TestCase
 {
@@ -75,6 +76,22 @@ class RecaptchaTest extends TestCase
     public function test_livewire_snippet_is_empty_when_disabled()
     {
         $this->assertSame('', app(RecaptchaV3::class)->livewire('feedback_send'));
+    }
+
+    #[DefineEnvironment('withLaravelCommonSanitizer')]
+    public function test_livewire_token_is_excluded_from_laravel_common_sanitizing()
+    {
+        $this->assertSame(['g-recaptcha-response', 'recaptchaToken'], config('ig-common.sanitize.except'));
+    }
+
+    public function test_laravel_common_config_is_left_alone_without_laravel_common()
+    {
+        $this->assertNull(config('ig-common'));
+    }
+
+    protected function withLaravelCommonSanitizer($app): void
+    {
+        $app['config']->set('ig-common.sanitize.except', ['g-recaptcha-response']);
     }
 
     private function enabledRecaptcha(): RecaptchaV3
