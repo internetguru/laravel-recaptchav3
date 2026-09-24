@@ -65,5 +65,22 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
         Validator::replacer('recaptchav3', function ($message, $attribute, $rule, $parameters) {
             return trans('recaptchav3::messages.failed');
         });
+
+        $this->excludeTokenFromSanitizing();
+    }
+
+    /**
+     * laravel-common sanitizes every Livewire property it validates and reports the ones it cannot type.
+     * The token is Google's opaque value, so it is skipped like the g-recaptcha-response field.
+     */
+    protected function excludeTokenFromSanitizing(): void
+    {
+        $except = config('ig-common.sanitize.except');
+
+        if (! is_array($except)) {
+            return;
+        }
+
+        config(['ig-common.sanitize.except' => [...$except, 'recaptchaToken']]);
     }
 }
