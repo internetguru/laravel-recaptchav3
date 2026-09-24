@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.1] - 2026-09-24
+
+### Fixed
+
+- The Livewire `recaptchaToken` property is excluded from laravel-common input sanitizing, so it is no longer logged as unmapped input.
+
 ## [1.3.0] - 2026-09-23
 
 _Stable release based on [1.3.0-rc.1]._
@@ -165,6 +171,7 @@ _Stable release based on [3.0.0-rc.1]._
 
 - New changelog file.
 
+[1.3.1]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.3.0...v1.3.1
 [1.3.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.2.1...v1.3.0
 [1.3.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.2.1
 [1.2.1]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.2.0...v1.2.1
