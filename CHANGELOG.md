@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.0] - 2026-10-30
+
+_Stable release based on [1.4.0-rc.1]._
+
+## [1.4.0-rc.1] - 2026-10-30
+
+### Fixed
+
+- The script middleware is registered through the HTTP kernel, so it also runs in an application's feature tests, where the kernel used to drop it.
+
 ## [1.3.1] - 2026-09-24
 
 ### Fixed
@@ -171,6 +181,8 @@ _Stable release based on [3.0.0-rc.1]._
 
 - New changelog file.
 
+[1.4.0]: https://github.com/internetguru/laravel-recaptchav3/compare/v1.3.1...v1.4.0
+[1.4.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.3.1
 [1.3.1]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.3.0...v1.3.1
 [1.3.0]: https://https://github.com/internetguru/laravel-recaptchav3/compare/v1.2.1...v1.3.0
 [1.3.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.2.1
