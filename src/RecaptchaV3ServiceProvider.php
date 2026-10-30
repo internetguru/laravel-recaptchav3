@@ -2,6 +2,8 @@
 
 namespace InternetGuru\LaravelRecaptchaV3;
 
+use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -40,7 +42,11 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
             ], 'recaptchav3-translations');
         }
 
-        $this->app['router']->pushMiddlewareToGroup('web', InjectRecaptchaScript::class);
+        // Through the kernel: it overwrites the router's groups whenever it is resolved after boot, as in tests.
+        $kernel = $this->app->make(HttpKernelContract::class);
+        if ($kernel instanceof HttpKernel) {
+            $kernel->appendMiddlewareToGroup('web', InjectRecaptchaScript::class);
+        }
 
         Blade::directive('recaptchaInit', function () {
             return "<?php echo app(\InternetGuru\LaravelRecaptchaV3\RecaptchaV3::class)->initJs(); ?>";

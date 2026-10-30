@@ -2,9 +2,11 @@
 
 namespace Tests;
 
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use InternetGuru\LaravelRecaptchaV3\Middleware\InjectRecaptchaScript;
 use InternetGuru\LaravelRecaptchaV3\RecaptchaV3;
 use Orchestra\Testbench\Attributes\DefineEnvironment;
 
@@ -103,5 +105,13 @@ class RecaptchaTest extends TestCase
                 return true;
             }
         };
+    }
+
+    public function test_script_middleware_survives_the_kernel_syncing_its_groups()
+    {
+        $kernel = app(HttpKernel::class);
+        $kernel->setMiddlewareGroups($kernel->getMiddlewareGroups());
+
+        $this->assertContains(InjectRecaptchaScript::class, app('router')->getMiddlewareGroups()['web']);
     }
 }

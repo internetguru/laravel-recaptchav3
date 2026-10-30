@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- The script middleware is registered through the HTTP kernel, so it also runs in an application's feature tests, where the kernel used to drop it.
+
 ## [1.3.1] - 2026-09-24
 
 ### Fixed
