@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Tests install on current Laravel with Testbench 10 and 11.
+
 ## [1.4.0] - 2026-10-30
 
 _Stable release based on [1.4.0-rc.1]._
