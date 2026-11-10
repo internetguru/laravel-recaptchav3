@@ -1,3 +1,3 @@
 #!/bin/env bash
-docker build -t laravel-user-test . \
-  && docker run --rm laravel-user-test
+docker build -t laravel-recaptchav3-test . \
+  && docker run --rm laravel-recaptchav3-test
