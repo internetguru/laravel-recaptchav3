@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- ReCaptcha works without `internetguru/laravel-common` installed instead of failing on its missing `Helpers` class.
+
 ## [1.5.0] - 2026-11-10
 
 _Stable release based on [1.5.0-rc.1]._

@@ -6,3 +6,5 @@ includes:
 parameters:
     paths:
         - src/
+    configDirectories:
+        - src/config
