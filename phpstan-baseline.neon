@@ -1,0 +1,43 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method InternetGuru\\LaravelRecaptchaV3\\Middleware\\InjectRecaptchaScript\:\:handle\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Middleware/InjectRecaptchaScript.php
+
+		-
+			message: '#^Method InternetGuru\\LaravelRecaptchaV3\\Middleware\\InjectRecaptchaScript\:\:isHtmlResponse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Middleware/InjectRecaptchaScript.php
+
+		-
+			message: '#^Method InternetGuru\\LaravelRecaptchaV3\\Middleware\\InjectRecaptchaScript\:\:isHtmlResponse\(\) has parameter \$response with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Middleware/InjectRecaptchaScript.php
+
+		-
+			message: '#^Call to static method verifyRequestSignature\(\) on an unknown class InternetGuru\\LaravelCommon\\Support\\Helpers\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/RecaptchaV3.php
+
+		-
+			message: '#^Instanceof between Orchestra\\Testbench\\Http\\Kernel and Illuminate\\Foundation\\Http\\Kernel will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/RecaptchaV3ServiceProvider.php
+
+		-
+			message: '#^Trait InternetGuru\\LaravelRecaptchaV3\\Traits\\WithRecaptcha is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/Traits/WithRecaptcha.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 5
+			path: src/config/recaptchav3.php
