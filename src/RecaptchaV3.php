@@ -28,7 +28,8 @@ class RecaptchaV3
         if (app()->runningInConsole()) {
             return false;
         }
-        if (Helpers::verifyRequestSignature(request())) {
+        // laravel-common is optional; it requires this package, not the other way round
+        if (class_exists(Helpers::class) && Helpers::verifyRequestSignature(request())) {
             return false;
         }
         if (app()->environment('local')) {

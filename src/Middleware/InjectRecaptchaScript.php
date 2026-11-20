@@ -9,6 +9,7 @@ use InternetGuru\LaravelRecaptchaV3\RecaptchaV3;
 
 class InjectRecaptchaScript
 {
+    /** @return \Symfony\Component\HttpFoundation\Response */
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
@@ -28,7 +29,8 @@ class InjectRecaptchaScript
         return $response;
     }
 
-    protected function isHtmlResponse($response)
+    /** @param  mixed  $response */
+    protected function isHtmlResponse($response): bool
     {
         return $response instanceof Response &&
                ! $response->isRedirection() &&
