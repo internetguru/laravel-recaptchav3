@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2026-11-20
+
+_Stable release based on [1.6.0-rc.1]._
+
 ## [1.6.0-rc.1] - 2026-11-20
 
 ### Fixed
@@ -197,6 +201,7 @@ _Stable release based on [3.0.0-rc.1]._
 
 - New changelog file.
 
+[1.6.0]: https://github.com/internetguru/laravel-recaptchav3/compare/v1.5.0...v1.6.0
 [1.6.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.5.0
 [1.5.0]: https://github.com/internetguru/laravel-recaptchav3/compare/v1.4.0...v1.5.0
 [1.5.0-rc.1]: https://github.com/internetguru/laravel-recaptchav3/releases/tag/v1.4.0
