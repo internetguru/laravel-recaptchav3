@@ -1,0 +1,10 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/internetguru/laravel-scripts/phpstan/ig.neon
+    - phpstan-baseline.neon
+
+parameters:
+    paths:
+        - src/
+    configDirectories:
+        - src/config

@@ -5,6 +5,7 @@ namespace InternetGuru\LaravelRecaptchaV3\Traits;
 use Illuminate\Validation\ValidationException;
 use InternetGuru\LaravelRecaptchaV3\RecaptchaV3;
 
+// @phpstan-ignore trait.unused (used by the applications)
 trait WithRecaptcha
 {
     public $recaptchaToken;

@@ -44,6 +44,7 @@ class RecaptchaV3ServiceProvider extends ServiceProvider
 
         // Through the kernel: it overwrites the router's groups whenever it is resolved after boot, as in tests.
         $kernel = $this->app->make(HttpKernelContract::class);
+        // @phpstan-ignore instanceof.alwaysTrue (only the Testbench kernel is known during analysis)
         if ($kernel instanceof HttpKernel) {
             $kernel->appendMiddlewareToGroup('web', InjectRecaptchaScript::class);
         }
